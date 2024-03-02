@@ -10,6 +10,13 @@ class Veiculo(db.Model):
     marca = db.Column(db.String(100), nullable=False)
     modelo = db.Column(db.String(100), nullable=False)
     km_troca_oleo = db.Column(db.Integer)
+    
+    def __init__(self, placa, marca, modelo, km_troca_oleo):
+        self.placa = placa
+        self.marca = marca
+        self.modelo = modelo
+        self.km_troca_oleo = km_troca_oleo
+
 
 # tabela motorista
 class Motorista(db.Model):

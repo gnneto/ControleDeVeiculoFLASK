@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 
 controle_routes = Blueprint('controle_routes', __name__)
 
-@controle_routes.route('/controle')
+@controle_routes.route('/')
 def listar_controle():
     return render_template('/controle/tela_principal.html')
 

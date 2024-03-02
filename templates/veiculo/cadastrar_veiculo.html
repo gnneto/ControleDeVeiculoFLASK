@@ -1,2 +1,28 @@
+<!-- cadastrar_veiculo.html -->
 
-CADASTRAR VEICULO
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Veículo</title>
+</head>
+<body>
+    <h1>Cadastrar Veículo</h1>
+    <form action="/veiculo/cadastrar" method="POST">
+        <label for="placa">Placa:</label><br>
+        <input type="text" id="placa" name="placa" required><br>
+        
+        <label for="marca">Marca:</label><br>
+        <input type="text" id="marca" name="marca" required><br>
+        
+        <label for="modelo">Modelo:</label><br>
+        <input type="text" id="modelo" name="modelo" required><br>
+        
+        <label for="km_troca_oleo">Km para Troca de Óleo:</label><br>
+        <input type="number" id="km_troca_oleo" name="km_troca_oleo" required><br>
+        
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>
