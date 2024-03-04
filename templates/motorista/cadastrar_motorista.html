@@ -1,1 +1,53 @@
-CADASTRAR MOTORISTA
+
+{% extends 'base.html' %}
+{% block title%}Cadastrar Motorista{% endblock title%}
+
+{% block content %}
+
+<div class="container">
+        <h1 class="my-5">Cadastrar Motorista</h1>
+        <form method="post" action="{{ url_for('motoristas_routes.cadastrar_motorista')}}">
+            <!-- cod motorista -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="cod_motorista" class="form-label">Codigo do Motorista (codigo do funcionario)</label>
+                    <input type="text" class="form-control" id="cod_motorista" name="cod_motorista" placeholder="Codigo do Motorista">
+                    
+                </div>
+            </div>
+
+            <!-- nome -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                </div>
+            </div>
+
+            <!-- telefone-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone">
+                </div>
+            </div>
+
+            <!--cnh-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="cnh" class="form-label">CNH</label>
+                    <input type="text" class="form-control" id="cnh" name="cnh" placeholder="CNH">
+                </div>
+            </div>
+    
+            <button class="btn btn-primary mb-2" type="submit">Cadastrar</button>
+            <a href="{{ url_for('motoristas_routes.listar_motorista')}}" class="mx-2">Lista de motoristas</a>
+        </form>
+    </div>
+
+<script>
+    {% for field in form %}
+        document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+    {% endfor %}
+</script>
+{% endblock %}

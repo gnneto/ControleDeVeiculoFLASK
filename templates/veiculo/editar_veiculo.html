@@ -1,2 +1,55 @@
+{% extends 'base.html' %}
+{% block title%}Editar Motorista{% endblock title%}
 
-EDITAR VEICULO
+{% block content %}
+<h1 class="my-5">Editar Veiculo</h1>
+
+<form method="post">
+
+            <!-- placa -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="placa" class="form-label">Placa</label>
+                    <input type="text" name="placa" id="placa" placeholder="Placa" value="{{ veiculo.placa }}"><br>
+
+                </div>
+            </div>
+
+            <!-- marca -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" name="marca" id="marca" placeholder="Marca" value="{{ veiculo.marca }}"><br>
+                </div>
+            </div>
+
+            <!-- veiculo modelo -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="modelo" class="form-label">Modelo</label>
+                    <input type="text" name="modelo" id="modelo" placeholder="Km para troca de oleo" value="{{ veiculo.modelo }}"><br>
+
+                </div>
+            </div>
+
+
+            <!-- veiculo.km_troca_oleo -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="KM troca de oloe" class="form-label">KM troca de oloe</label>
+                    <input type="text" name="km_troca_oleo" id="km_troca_oleo" placeholder="Km para troca de oleo" value="{{ veiculo.km_troca_oleo }}"><br>
+
+                </div>
+            </div>
+
+    <button class="btn btn-primary mb-3" type="submit">Salvar alterações</button>
+    <a href=" " class="mx-2">Cancelar</a>
+</form>
+
+
+<script>
+    {% for field in form %}
+        document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+    {% endfor %}
+</script>
+{% endblock %}

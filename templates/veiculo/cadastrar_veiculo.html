@@ -1,28 +1,61 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Veiculo{% endblock title%}
+
+{% block content %}
+<body>
+    <h1 class="my-5">Cadastrar Veículo</h1>
+   
+    <div class="container">
+        <form method="post">
+            <!-- placa -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="placa" class="form-label">Placa</label>
+                    <input type="text" id="placa" name="placa" required><br>
+                </div>
+            </div>
+
+            <!-- marca-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="marca" class="form-label">Marca</label>
+                    <input type="text" id="marca" name="marca" required><br>
+                </div>
+            </div>
+
+            <!--veiculo-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="modelo" class="form-label">Veiculo</label>
+                    <input type="text" id="modelo" name="modelo" required><br>
+                
+                </div>
+            </div>
+
+            <!--km para troca de oleo -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="km_troca_oleo" class="form-label">KM troca oleo</label>
+                    <input type="number" id="km_troca_oleo" name="km_troca_oleo" required><br>
+                     
+                </div>
+            </div>
+    
+            <button class="btn btn-primary mb-2" type="submit">Cadastrar</button>
+            <a href="{{ url_for('veiculo_routes.listar_veiculos')}}" class="mx-2">Lista de veiculos</a>
+        </form>
+        <a href="{{ url_for('controle_routes.listar_controle')}}">Voltar para a tela principal</a>
+    </div>
+</body>
+
+<script>
+    {% for field in form %}
+        document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+    {% endfor %}
+</script>
+{% endblock %}
+
+
 <!-- cadastrar_veiculo.html -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Veículo</title>
-</head>
-<body>
-    <h1>Cadastrar Veículo</h1>
-    <form action="/veiculo/cadastrar" method="POST">
-        <label for="placa">Placa:</label><br>
-        <input type="text" id="placa" name="placa" required><br>
-        
-        <label for="marca">Marca:</label><br>
-        <input type="text" id="marca" name="marca" required><br>
-        
-        <label for="modelo">Modelo:</label><br>
-        <input type="text" id="modelo" name="modelo" required><br>
-        
-        <label for="km_troca_oleo">Km para Troca de Óleo:</label><br>
-        <input type="number" id="km_troca_oleo" name="km_troca_oleo" required><br>
-        
-        <button type="submit">Cadastrar</button>
-    </form>
-</body>
-</html>
+

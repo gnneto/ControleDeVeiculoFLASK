@@ -6,61 +6,75 @@
 <body>
     <div class="container">
         <h1 class="my-5">Cadastrar Controle</h1>
-        <form >
+        <form method="post" action="{{ url_for('controle_routes.cadastrar_controle')}}">
             <!-- veiculo e motorista  -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="a" class="form-label">Veículo</label> 
-                        
+                    <label for="veiculo">Veículo:</label>
+                    <select name="veiculo" id="veiculo" class="form-control">
+                        {% for veiculo in veiculos %}
+                            <option value="{{ veiculo.id }}">{{ veiculo.modelo }} - {{ veiculo.placa }}</option>
+                        {% endfor %}
+                    </select>
+
                 </div>
                 <div class="col-md-6">
-                    <label for="motorista" class="form-label">Motorista</label>
-                    
+                    <label for="motorista">Motorista:</label>
+                    <select name="motorista" id="motorista" class="form-control">
+                        {% for motorista in motoristas %}
+                            <option value="{{ motorista.id }}">[{{ motorista.cod_motorista }}] - Nome: {{ motorista.nome }} - CNH: {{ motorista.cnh}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
 
             <!-- data e hora saida  -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for=" " class="form-label">Data saida</label>
-                    
+                    <label for="data_saida" class="form-label">Data saida</label>
+                    <input type="date" name="data_saida" id="data_saida" class="form-control">
+
                 </div>
                 <div class="col-md-6">
-                    <label for=" " class="form-label">Hora saida</label>
-                    
+                    <label for="hora_saida" class="form-label">Hora saida</label>
+                    <input type="time" name="hora_saida" id="hora_saida" class="form-control">
+
                 </div>
             </div>
 
             <!-- destino -->
             <div class="row mb-3">
                 <div class="col-md">
-                    <label for=" " class="form-label">Destino</label>
-                    
+                    <label for="destino" class="form-label">Destino</label>
+                    <input type="text" name="destino" id="destino" class="form-control">
+
                 </div>
             </div>
 
             <!-- data e hora retorno -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for=" " class="form-label">Data retorno</label>
-                    
+                    <label for="data_retorno" class="form-label">Data retorno</label>
+                    <input type="date" name="data_retorno" id="data_retorno" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <label for=" " class="form-label">Data retorno</label>
-                    
+                    <label for="hora_retorno" class="form-label">Hora retorno</label>
+                    <input type="time" name="hora_retorno" id="hora_retorno" class="form-control">
                 </div>
             </div>
 
             <!-- kmsaida e retorno -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for=" " class="form-label">Km saida</label>
-                    
+                    <label for="km_saida" class="form-label">Km saida</label>
+                    <input type="number" name="km_saida" id="km_saida" class="form-control">
+
                 </div>
 
                 <div class="col-md-6">
-                    <label for=" " class="form-label">Km retorno</label>
-                    
+                    <label for="km_retorno" class="form-label">Km retorno</label>
+                    <input type="number" name="km_retorno" id="km_retorno" class="form-control">
+
                 </div>
             </div>
 
@@ -68,8 +82,9 @@
             <!-- km percorrido -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for=" " class="form-label">Km percorrido</label>
-                    
+                    <label for="km_percorrido" class="form-label">Km percorrido</label>
+                    <input type="number" name="km_percorrido" id="km_percorrido" class="form-control">
+
 
                 </div>
                 
@@ -106,9 +121,9 @@
         //calcula o Km prcorrido
         function calcularKmPercorrido() {
 
-            var kmSaida = document.getElementById('id_km_saida');
-            var kmRetorno = document.getElementById('id_km_retorno');
-            var kmPercorrido = document.getElementById('id_km_percorrido');
+            var kmSaida = document.getElementById('km_saida');
+            var kmRetorno = document.getElementById('km_retorno');
+            var kmPercorrido = document.getElementById('km_percorrido');
 
             
             kmPercorrido.value = kmRetorno.value - kmSaida.value;
@@ -121,8 +136,8 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
-            const kmSaidaInput = document.getElementById("id_km_saida");
-            const kmRetornoInput = document.getElementById("id_km_retorno");
+            const kmSaidaInput = document.getElementById("km_saida");
+            const kmRetornoInput = document.getElementById("km_retorno");
     
             form.addEventListener('submit', function (event) {
                 const kmSaida = parseFloat(kmSaidaInput.value);

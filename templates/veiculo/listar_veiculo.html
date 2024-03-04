@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title%}Veiculos{% endblock title%}
+{% block title%}Veiculos{% endblock title %}
 
 {% block content %}
     <div class='container'>
         <h1 class="mb-4">Veiculos</h1>
-        <a class="btn btn-primary mb-3" href=" ">Cadastrar veiculo</a>
+        <a class="btn btn-primary mb-3" href="{{ url_for('veiculo_routes.cadastrar_veiculo')}}">Cadastrar veiculo</a>
 
         <table class="table table-bordered">
             <thead class="thead-dark">
@@ -26,7 +26,7 @@
                         <td>{{ veiculo.modelo }}</td>
                         <td>{{ veiculo.km_troca_oleo }}</td>
                         <td>
-                            <a href=" " class="btn btn-warning mx-1">Editar</a>
+                            <a href="veiculo/editar/{{veiculo.id}}" class="btn btn-warning mx-1">Editar</a>
                             <a href="#" class="btn btn-danger mx-1" onclick="confirmarExclusao('{{ veiculo.id }}')">Excluir</a>
                         </td>
                     </tr>
@@ -57,13 +57,11 @@
             $('#confirmarExclusaoModal').modal('show');
             $('#confirmarExclusaoBtn').on('click', function () {
                 $('#confirmarExclusaoModal').modal('hide');
-                window.location.href = `/veiculos/excluir-veiculo/${veiculoId}`;
+                window.location.href = `/veiculo/deletar/${veiculoId}`;
             });
             $('#cancelarExclusaoBtn').on('click', function () {
                 $('#confirmarExclusaoModal').modal('hide');
             });
         }
     </script>
-
-
 {% endblock %}

@@ -1,1 +1,164 @@
-EDITAR UM DETERMINADO CONTROLE
+{% extends 'base.html' %}
+{% block title%}Editar controle{% endblock title%}
+
+{% block content %}
+<body>
+    <div class="container">
+        <h1 class="my-5">Editar Controle</h1>
+        <form method="post" action="{{ url_for('controle_routes.editar_controle', id=controle.id) }}">
+
+            <!-- veiculo e motorista  -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="veiculo">Veículo:</label>
+                    <select name="veiculo" id="veiculo" class="form-control">
+                        {% for veiculo in veiculos %}
+                            <option value="{{ veiculo.id }}" {% if veiculo.id == controle.veiculo_id %} selected {% endif %}>Placa: {{ veiculo.placa }} | Veiculo: {{ veiculo.modelo }} | Troca de oleo KM: {{ veiculo.km_troca_oleo }}</option>
+                            
+                        {% endfor %}
+                    </select>
+
+                </div>
+                <div class="col-md-6">
+                    <label for="motorista">Motorista:</label>
+                    <select name="motorista" id="motorista" class="form-control">
+                        {% for motorista in motoristas %}
+                             <option value="{{ motorista.id }}" {% if motorista.id == controle.motorista_id %} selected {% endif %}>Nome: {{ motorista.nome }} | CNH: {{ motorista.cnh }}</option>
+                            
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+    
+            <!-- data e hora saida  -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="data_saida">Data Saída:</label>
+                    <input type="date" name="data_saida" id="data_saida" class="form-control" value="{{ controle.data_saida }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="hora_saida">Hora Saída:</label>
+                    <input type="time" name="hora_saida" id="hora_saida" class="form-control" value="{{ controle.hora_saida }}" step="1">
+                </div>
+            </div>
+    
+            <!-- destino -->
+            <div class="row mb-3">
+                <div class="col-md">
+                    <label for="destino">Destino:</label>
+                    <input type="text" name="destino" id="destino" class="form-control" value="{{ controle.destino }}">
+                </div>
+            </div>
+    
+            <!-- data e hora retorno -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="data_retorno" class="form-label">Data retorno</label>
+                    <input type="date" name="data_retorno" id="data_retorno" class="form-control" value="{{ controle.data_retorno }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="hora_retorno" class="form-label">Hora retorno</label>
+                    <input type="time" name="hora_retorno" id="hora_retorno" class="form-control" value="{{ controle.hora_retorno }}">
+                </div>
+            </div>
+    
+            <!-- kmsaida e retorno -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="km_saida" class="form-label">Km saida</label>
+                    <input type="number" name="km_saida" id="km_saida" class="form-control" value="{{ controle.km_saida }}">
+
+                </div>
+
+                <div class="col-md-6">
+                    <label for="km_retorno" class="form-label">Km retorno</label>
+                    <input type="number" name="km_retorno" id="km_retorno" class="form-control" value="{{ controle.km_retorno }}">
+
+                </div>
+            </div>
+    
+            <!-- km percorrido -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="km_percorrido" class="form-label">Km percorrido</label>
+                    <input type="number" name="km_percorrido" id="km_percorrido" class="form-control" value="{{ controle.km_percorrido }}">
+                </div>
+            </div>
+
+
+            <button class="btn btn-primary mb-3" type="submit">Salvar edições</button> 
+            <a href="{{ url_for('controle_routes.listar_controle')}}" class="mx-2">Cancelar</a>
+        </form>
+    </div>
+
+
+    <div class="modal fade" id="kmModal" tabindex="-1" aria-labelledby="kmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="kmModalLabel">Erro de Validação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    O valor de Km Retorno não pode ser menor ou igual a Km Saída.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // formato datas 
+        document.addEventListener('DOMContentLoaded', function() {
+            var data_saida = "{{ controle.formato_data_saida }}";
+            var data_retorno = "{{ controle.formato_data_retorno }}";
+    
+            document.querySelector('#id_data_saida').value = data_saida;
+            document.querySelector('#id_data_retorno').value = data_retorno;
+        });
+
+        function calcularKmPercorrido() {
+
+            var kmSaida = document.getElementById('id_km_saida');
+            var kmRetorno = document.getElementById('id_km_retorno');
+            var kmPercorrido = document.getElementById('id_km_percorrido');
+
+            
+            kmPercorrido.value = kmRetorno.value - kmSaida.value;
+        }
+        document.addEventListener('input', calcularKmPercorrido);
+        {% for field in form %}
+            document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+        {% endfor %}
+
+        // valida os km
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const kmSaidaInput = document.getElementById("id_km_saida");
+            const kmRetornoInput = document.getElementById("id_km_retorno");
+    
+            form.addEventListener('submit', function (event) {
+                const kmSaida = parseFloat(kmSaidaInput.value);
+                const kmRetorno = parseFloat(kmRetornoInput.value);
+    
+                if (isNaN(kmSaida) || isNaN(kmRetorno) || kmRetorno <= kmSaida) {
+                    var myModal = new bootstrap.Modal(document.getElementById('kmModal'));
+                    myModal.show();
+    
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+
+</body>
+
+
+{% endblock %}

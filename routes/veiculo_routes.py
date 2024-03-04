@@ -26,11 +26,31 @@ def cadastrar_veiculo():
             veiculo = Veiculo(placa=placa, marca=marca, modelo=modelo, km_troca_oleo=km_troca_oleo)
             db.session.add(veiculo)
             db.session.commit()
-            return redirect(url_for('veiculo_routes.listar_veiculo'))
+            return redirect(url_for('veiculo_routes.listar_veiculos'))
     return render_template('/veiculo/cadastrar_veiculo.html')
 
 
 # editar veiculo
-@veiculo_routes.route('/veiculo/editar/<int:id>')
+@veiculo_routes.route('/veiculo/editar/<int:id>', methods=['GET', 'POST'])
 def editar_veiculo(id):
-    return f'Editar veículo com ID {id}'
+    veiculo = Veiculo.query.get(id)
+    if request.method == 'POST':
+        veiculo.placa = request.form['placa']
+        veiculo.marca = request.form['marca']
+        veiculo.modelo = request.form['modelo']
+        veiculo.km_troca_oleo = request.form['km_troca_oleo']
+        # veiculo = Veiculo(placa=placa, marca=marca, modelo=modelo, km_troca_oleo=km_troca_oleo)
+        db.session.commit()
+        return redirect(url_for('veiculo_routes.listar_veiculos'))
+    return render_template('/veiculo/editar_veiculo.html', veiculo=veiculo)
+
+
+
+# deletar veiculo
+
+@veiculo_routes.route('/veiculo/deletar/<int:id>')
+def deletar_veiculo(id):
+    veiculo = Veiculo.query.get_or_404(id)
+    db.session.delete(veiculo)
+    db.session.commit()
+    return redirect(url_for('veiculo_routes.listar_veiculos'))

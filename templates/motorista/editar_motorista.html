@@ -1,1 +1,53 @@
-EDITAR MOTORISTA
+{% extends 'base.html' %}
+{% block title%}Editar Motorista{% endblock title%}
+
+{% block content %}
+<h1 class="my-5">Editar Motorista</h1>
+
+<form method="post">
+
+            <!-- cod motorista -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="cod_motorista" class="form-label">Codigo Motorista</label>
+                    <input type="text" name='cod_motorista' id='cod_motorista' value={{ motorista.cod_motorista }}><br>
+                </div>
+            </div>
+
+            <!-- nome -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" name='nome' id='nome' value={{ motorista.nome }}><br>
+                </div>
+            </div>
+
+            <!-- telefone-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="text" name='telefone' id='telefone' value={{ motorista.telefone }}><br>
+
+                </div>
+            </div>
+
+            <!--cnh-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="cnh" class="form-label">CNH</label>
+                    <input type="text" name='cnh' id='cnh' value={{ motorista.cnh }}><br>
+
+                </div>
+            </div>
+
+    <button class="btn btn-primary mb-3" type="submit">Salvar alterações</button>
+    <a href=" " class="mx-2">Cancelar</a>
+</form>
+
+
+<script>
+    {% for field in form %}
+        document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+    {% endfor %}
+</script>
+{% endblock %}
