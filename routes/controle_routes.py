@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from models import db, Controle, Veiculo, Motorista
 from datetime import datetime, time
 
@@ -6,6 +6,12 @@ controle_routes = Blueprint('controle_routes', __name__)
 
 @controle_routes.route('/')
 def listar_controle():
+    # Verificar se o usuário está logado
+    if 'username' not in session:
+        # Se o usuário não estiver logado, redirecioná-lo para a página de login
+        return redirect(url_for('auth.login'))
+
+    # Se o usuário estiver logado, continuar com a lógica para listar os controles
     controles = Controle.query.all()
     return render_template('/controle/tela_principal.html', controles=controles)
 
@@ -29,16 +35,16 @@ def cadastrar_controle():
         motorista = Motorista.query.get(motorista_id)
         
         controle = Controle(
-            veiculo=veiculo, 
-            motorista=motorista, 
-            data_saida=data_saida, 
-            hora_saida=hora_saida, 
-            km_saida=km_saida, 
-            destino=destino, 
-            data_retorno=data_retorno, 
-            hora_retorno=hora_retorno, 
-            km_retorno=km_retorno, 
-            km_percorrido=km_percorrido
+            veiculo = veiculo,
+            motorista = motorista,
+            data_saida = data_saida,
+            hora_saida = hora_saida,
+            km_saida = km_saida,
+            destino = destino,
+            data_retorno = data_retorno,
+            hora_retorno = hora_retorno,
+            km_retorno = km_retorno,
+            km_percorrido = km_percorrido
         )
 
         db.session.add(controle)

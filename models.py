@@ -45,4 +45,18 @@ class Controle(db.Model):
     veiculo = db.relationship('Veiculo', backref=db.backref('controles', lazy=True))
     motorista = db.relationship('Motorista', backref=db.backref('controles', lazy=True))
 
+
+
+# tabela usuario
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=True)
+    first_name = db.Column(db.String(100), nullable=True)
+    last_name = db.Column(db.String(100), nullable=True)
+
+
+
 from app import db
